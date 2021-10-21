@@ -1,5 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 
-export default function Cube () {
-    
+import { useSingleton } from "./resources/singleton";
+
+export default function Cube({ letters }) {
+  const [letter, setLetter] = useState("")
+
+  useSingleton(() => {
+    setLetter(letters[Math.floor(Math.random() * letters.length)])
+  })
+
+  return <div className="Cube">{letter}</div>;
 }
