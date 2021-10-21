@@ -7,7 +7,7 @@
     height: 100vh;
     width:  100vw;
     background-color: #282c34;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     display: flex;
 }
 
@@ -20,19 +20,23 @@
 }
 
 .Board {
+  flex-wrap: wrap;
   height: 100vmin;
   width: 100vmin;
-  border: 2px solid red;
+  /* border: 2px solid red; */
+  background-color: red;
 }
 
 .Cube {
   height: 25vmin;
   width: 25vmin;
-  border: 2px solid green;
+  /* border: 2px solid green; */
+  background-color: green;
 }
 
 .Words {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
+  background-color: blue;
 }
 
 .Words-landscape {
@@ -44,7 +48,8 @@
 }
 
 .Buttons {
-  border: 2px solid purple;
+  /* border: 2px solid purple; */
+  background-color: purple;
 }
 
 .Buttons-landscape {
