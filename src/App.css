@@ -1,5 +1,58 @@
 .App {
   text-align: center;
-  background-color: #282c34;
   color: white;
+}
+
+.Game {
+    height: 100vh;
+    width:  100vw;
+    background-color: #282c34;
+    border: 2px solid black;
+    display: flex;
+}
+
+.Game-landscape {
+  flex-direction: row;
+}
+
+.Game-portrait {
+  flex-direction: column;
+}
+
+.Board {
+  height: 100vmin;
+  width: 100vmin;
+  border: 2px solid red;
+}
+
+.Cube {
+  height: 25vmin;
+  width: 25vmin;
+  border: 2px solid green;
+}
+
+.Words {
+  border: 2px solid blue;
+}
+
+.Words-landscape {
+  height: 100vh;
+}
+
+.Words-portrait {
+  width: 100vh;
+}
+
+.Buttons {
+  border: 2px solid purple;
+}
+
+.Buttons-landscape {
+  width: 25vmin;
+  height: 100vh;
+}
+
+.Buttons-portrait {
+  width: 100vw;
+  height: 25vmin;
 }
