@@ -1,12 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 export default function Cube({ letters }) {
   const [letter] = useState(() => {
     const splitLetters = letters.split(" ");
-    const initialLetter = splitLetters[Math.floor(Math.random() * splitLetters.length)];
+    const initialLetter =
+      splitLetters[Math.floor(Math.random() * splitLetters.length)];
 
-    return initialLetter
-  })
+    return initialLetter;
+  });
 
-  return <div className = "Cube"><p>{letter}</p></div>;
+  function handleLetterClick(e) {
+    e.preventDefault();
+    console.log(letter);
+  }
+
+  return (
+    <div className="Cube" onClick={handleLetterClick}>
+      <p>{letter}</p>
+    </div>
+  );
 }
