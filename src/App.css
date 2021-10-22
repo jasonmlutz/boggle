@@ -126,30 +126,11 @@ input[type="submit"] {
   transform: translate(-50%, -50%);
 }
 
-.Words {
-  /* border: 2px solid blue; */
-  background-color: blue;
+.Interface {
+  background-color: yellow;
 }
 
-.Words-landscape {
-  height: 100vh;
-}
-
-.Words-portrait {
-  width: 100vh;
-}
-
-.Buttons {
-  /* border: 2px solid purple; */
-  background-color: purple;
-}
-
-.Buttons-landscape {
-  width: 25vmin;
-  height: 100vh;
-}
-
-.Buttons-portrait {
-  width: 100vw;
-  height: 25vmin;
+.Interface-portrait {
+  width: 100%;
+  flex: 1 1 auto;
 }

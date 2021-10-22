@@ -5,8 +5,11 @@ import Board from "./Board";
 
 export default function Game() {
   return (
-    <div className="Game">
+    <div className="Game Game-portrait">
       <Board />
+      <div className="Interface Interface-portrait">
+          
+      </div>
     </div>
   );
 }
