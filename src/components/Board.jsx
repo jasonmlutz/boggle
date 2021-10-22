@@ -32,7 +32,5 @@ export default function Board() {
     </li>
   ));
 
-  return (
-    <ul className = "Board">{orderedCubes}</ul>
-  )
+  return <ul className="Board">{orderedCubes}</ul>;
 }

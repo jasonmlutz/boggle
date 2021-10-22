@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+import { CurrentWordContext } from "./contexts/currentWordContext";
 
 export default function Cube({ letters }) {
   const [letter] = useState(() => {
@@ -9,9 +11,10 @@ export default function Cube({ letters }) {
     return initialLetter;
   });
 
-  function handleLetterClick(e) {
-    e.preventDefault();
-    console.log(letter);
+  const {currentWord, setCurrentWord} = useContext(CurrentWordContext);
+
+  function handleLetterClick() {
+    setCurrentWord(currentWord + letter)
   }
 
   return (
