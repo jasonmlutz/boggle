@@ -1,5 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 
-export default function WordList () {
-    
+import { WordListContext } from "./contexts/wordListContext";
+
+export default function WordList() {
+  const { wordList } = useContext(WordListContext);
+
+  const wordListItems = wordList.map((word, index) => (
+    <li key={index} className = "Word">{word}</li>
+  ));
+
+  return <ul className="WordList">{wordListItems}</ul>;
 }
