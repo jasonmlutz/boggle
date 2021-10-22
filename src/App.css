@@ -101,15 +101,29 @@ input[type="submit"] {
   flex-wrap: wrap;
   height: 100vmin;
   width: 100vmin;
-  /* border: 2px solid red; */
   background-color: red;
 }
 
+.Cube-container {
+  height: 25%;
+  width: 25%;
+}
+
 .Cube {
-  height: 25vmin;
-  width: 25vmin;
-  /* border: 2px solid green; */
   background-color: green;
+  height: 90%;
+  width: 90%;
+  margin: 5%;
+  position: relative;
+}
+
+.Cube p {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .Words {

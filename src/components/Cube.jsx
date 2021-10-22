@@ -8,5 +8,5 @@ export default function Cube({ letters }) {
     return initialLetter
   })
 
-  return <div className="Cube">{letter}</div>;
+  return <div className = "Cube"><p>{letter}</p></div>;
 }

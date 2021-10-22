@@ -3,8 +3,10 @@ import Board from "./Board";
 // import ButtonContainer from "./ButtonContainer"
 // import WordList from "./WordList";
 
-export default function Game () {
-    return (
-        <Board/>
-    )
+export default function Game() {
+  return (
+    <div className="Game">
+      <Board />
+    </div>
+  );
 }

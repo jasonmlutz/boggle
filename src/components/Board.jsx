@@ -27,12 +27,12 @@ export default function Board() {
 
   // build a ul of Cube components from the cubeLetters
   const orderedCubes = cubeOrder.map((letters, index) => (
-    <li>
+    <li className = "Cube-container">
       <Cube key={index} letters={letters} />
     </li>
   ));
 
   return (
-    <ol className = "Board">{orderedCubes}</ol>
+    <ul className = "Board">{orderedCubes}</ul>
   )
 }
