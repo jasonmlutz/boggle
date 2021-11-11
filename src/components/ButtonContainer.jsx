@@ -6,21 +6,29 @@ export default function ButtonContainer() {
   const { currentWord, setCurrentWord } = useContext(CurrentWordContext);
   const { setWordList } = useContext(WordListContext);
 
+  function parseCurrentWord() {
+    const currentWordReadable = currentWord.map(letterData => (
+      letterData.letter
+    ));
+    return currentWordReadable
+  }
+
   function handleClearWord() {
-    setCurrentWord("");
+    setCurrentWord([]);
   }
 
   function handleSubmitWord() {
-    // setWordList(wordList.push(currentWord));
     setWordList((prevState) => {
-      return [...prevState, ...[currentWord]];
+      return [...prevState, ...[parseCurrentWord()]];
     });
     handleClearWord();
   }
+
+
   return (
     <div className="ButtonContainer">
       <button onClick={handleClearWord}>CLEAR</button>
-      <p>{currentWord}</p>
+      <p>{parseCurrentWord()}</p>
       <button onClick={handleSubmitWord}>SUBMIT</button>
     </div>
   );
