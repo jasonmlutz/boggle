@@ -4,13 +4,13 @@ import { WordListContext } from "./contexts/wordListContext";
 
 export default function ButtonContainer() {
   const { currentWord, setCurrentWord } = useContext(CurrentWordContext);
-  const { setWordList } = useContext(WordListContext);
+  const { wordList, setWordList } = useContext(WordListContext);
 
   function parseCurrentWord() {
-    const currentWordReadable = currentWord.map(letterData => (
-      letterData.letter
-    ));
-    return currentWordReadable.join("")
+    const currentWordReadable = currentWord.map(
+      (letterData) => letterData.letter
+    );
+    return currentWordReadable.join("");
   }
 
   function handleClearWord() {
@@ -18,12 +18,20 @@ export default function ButtonContainer() {
   }
 
   function handleSubmitWord() {
-    setWordList((prevState) => {
-      return [...prevState, ...[parseCurrentWord()]];
-    });
-    handleClearWord();
+    if (currentWord.length < 1) {
+      console.log("can't submit blank word");
+    } else {
+      if (wordList.includes(parseCurrentWord())) {
+        console.log("word already entered");
+        handleClearWord();
+      } else {
+        setWordList((prevState) => {
+          return [...prevState, ...[parseCurrentWord()]];
+        });
+        handleClearWord();
+      }
+    }
   }
-
 
   return (
     <div className="ButtonContainer">
