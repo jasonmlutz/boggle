@@ -26,11 +26,26 @@ export default function Board() {
   });
 
   // build a ul of Cube components from the cubeLetters
-  const orderedCubes = cubeOrder.map((letters, index) => (
-    <li className="Cube-container" key={index}>
-      <Cube letters={letters} />
-    </li>
-  ));
+  var orderedCubes = [];
+  var row = 1;
+  var col = 1;
+  cubeOrder.forEach((letters, index) => {
+    // create a new cube using the current letters and coords
+    var newCube = (
+      <li className="Cube-container" key={index}>
+        <Cube letters={letters} row={row} col={col} />
+      </li>
+    );
+    // add the new cube to the orderedCubes array
+    orderedCubes.push(newCube);
+    // increment the column
+    col++;
+    if (col > 4) {
+      // in the case that we are on column 5, reset column and increment row
+      col = 1;
+      row++;
+    }
+  });
 
   return <ul className="Board">{orderedCubes}</ul>;
 }

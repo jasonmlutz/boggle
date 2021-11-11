@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 import { CurrentWordContext } from "./contexts/currentWordContext";
 
-export default function Cube({ letters }) {
+export default function Cube({ letters, row, col }) {
   const [letter] = useState(() => {
     const splitLetters = letters.split(" ");
     const initialLetter =
