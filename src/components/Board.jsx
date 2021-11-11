@@ -33,7 +33,7 @@ export default function Board() {
     // create a new cube using the current letters and coords
     var newCube = (
       <li className="Cube-container" key={index}>
-        <Cube letters={letters} row={row} col={col} />
+        <Cube letters={letters} row={row} col={col} index = {index} />
       </li>
     );
     // add the new cube to the orderedCubes array
