@@ -10,7 +10,7 @@ export default function ButtonContainer() {
     const currentWordReadable = currentWord.map(letterData => (
       letterData.letter
     ));
-    return currentWordReadable
+    return currentWordReadable.join("")
   }
 
   function handleClearWord() {
