@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { CurrentWordContext } from "./contexts/currentWordContext";
-import { WordListContext } from "./contexts/wordListContext";
+import { WordListContext } from "./Game";
 
 export default function ButtonContainer() {
   const { currentWord, setCurrentWord } = useContext(CurrentWordContext);
