@@ -36,7 +36,9 @@ export default function ButtonContainer() {
   return (
     <div className="ButtonContainer">
       <button onClick={handleClearWord}>CLEAR</button>
-      <p>{parseCurrentWord()}</p>
+      <div className="CurrentWordContainer">
+        <p>{parseCurrentWord()}</p>
+      </div>
       <button onClick={handleSubmitWord}>SUBMIT</button>
     </div>
   );
