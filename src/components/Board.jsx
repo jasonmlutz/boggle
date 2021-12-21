@@ -26,26 +26,42 @@ export default function Board() {
   });
 
   // build a ul of Cube components from the cubeLetters
-  var orderedCubes = [];
-  var row = 1;
-  var col = 1;
-  cubeOrder.forEach((letters, index) => {
-    // create a new cube using the current letters and coords
-    var newCube = (
-      <li className="Cube-container" key={index}>
-        <Cube letters={letters} row={row} col={col} index = {index} />
-      </li>
-    );
-    // add the new cube to the orderedCubes array
-    orderedCubes.push(newCube);
-    // increment the column
-    col++;
-    if (col > 4) {
-      // in the case that we are on column 5, reset column and increment row
-      col = 1;
-      row++;
-    }
+  // to be run only on the first render
+  const [orderedCubesListItems] = useState(() => {
+    var orderedCubes = [];
+    var row = 1;
+    var col = 1;
+    cubeOrder.forEach((letters, index) => {
+      // select a letter at random from the letters
+      var splitLetters = letters.split(" ");
+      var letter =
+        splitLetters[Math.floor(Math.random() * splitLetters.length)];
+
+      // create a new cube using the current letters and coords
+      var newCube = (
+        <li className="Cube-container" key={index}>
+          <Cube
+            letters={letters}
+            letter={letter}
+            row={row}
+            col={col}
+            index={index}
+          />
+        </li>
+      );
+      // add the new cube to the orderedCubes array
+      orderedCubes.push(newCube);
+      // increment the column
+      col++;
+      if (col > 4) {
+        // in the case that we are on column 5, reset column and increment row
+        col = 1;
+        row++;
+      }
+    });
+
+    return orderedCubes;
   });
 
-  return <ul className="Board">{orderedCubes}</ul>;
+  return <ul className="Board">{orderedCubesListItems}</ul>;
 }
