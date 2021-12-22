@@ -64,12 +64,12 @@ export default function Game() {
     } else {
       if (wordList.includes(parseCurrentWord())) {
         console.log("word already entered");
-        setCurrentWord([]);
+        handleClearWord();
       } else {
         setWordList((prevState) => {
           return [...prevState, ...[parseCurrentWord()]];
         });
-        setCurrentWord([]);
+        handleClearWord();
       }
     }
   }
