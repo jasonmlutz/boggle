@@ -6,9 +6,10 @@ import WordList from "./WordList";
 export const CurrentCubeContext = createContext();
 
 export default function Game() {
-  const [currentCube, setCurrentCube] = useState({});
+  const [currentCube, setCurrentCube] = useState({index: -1});
   const [currentWord, setCurrentWord] = useState([]);
   const [wordList, setWordList] = useState([]);
+  const [selectedCubes, setSelectedCubes] = useState([]);
 
   function calculateDistance(cube1, cube2) {
     const colDiff = Math.abs(cube1.col - cube2.col);
@@ -40,6 +41,7 @@ export default function Game() {
           const lastValidLetter = currentWord[currentWord.length - 1];
           if (calculateDistance(currentCube, lastValidLetter) < 2) {
             setCurrentWord([...currentWord, currentCube]);
+
           } else {
             console.log("cube must be adjacent to previously selected cube");
           }
@@ -55,7 +57,7 @@ export default function Game() {
     } else {
       if (wordList.includes(parseCurrentWord())) {
         console.log("word already entered");
-        setCurrentWord([])
+        setCurrentWord([]);
       } else {
         setWordList((prevState) => {
           return [...prevState, ...[parseCurrentWord()]];
@@ -68,7 +70,7 @@ export default function Game() {
   return (
     <div className="Game Game-portrait">
       <CurrentCubeContext.Provider value={{ currentCube, setCurrentCube }}>
-        <Board />
+        <Board selectedCubes={selectedCubes} currentCubeIndex = {currentCube.index}/>
         <div className="Interface Interface-portrait">
           <ButtonContainer
             readableCurrentWord={parseCurrentWord(currentWord)}

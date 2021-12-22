@@ -117,6 +117,14 @@ input[type="submit"] {
   position: relative;
 }
 
+.SelectedCube {
+  background-color: blue;
+}
+
+.CurrentCube {
+  background-color: darkblue;
+}
+
 .Cube p {
   margin: 0;
   position: absolute;

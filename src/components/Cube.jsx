@@ -14,7 +14,7 @@ export default function Cube({ letter, row, col, index }) {
     };
 
     if (currentCube.index === index) {
-      setCurrentCube({});
+      setCurrentCube({index: -1});
     } else {
       setCurrentCube(newCurrentCube);
     }
