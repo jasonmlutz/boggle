@@ -1,43 +1,16 @@
-import React, { useContext } from "react";
-import { CurrentWordContext } from "./contexts/currentWordContext";
-import { WordListContext } from "./Game";
+import React from "react";
 
-export default function ButtonContainer() {
-  const { currentWord, setCurrentWord } = useContext(CurrentWordContext);
-  const { wordList, setWordList } = useContext(WordListContext);
-
-  function parseCurrentWord() {
-    const currentWordReadable = currentWord.map(
-      (letterData) => letterData.letter
-    );
-    return currentWordReadable.join("");
-  }
+export default function ButtonContainer({readableCurrentWord, setCurrentWord, handleSubmitWord}) {
 
   function handleClearWord() {
     setCurrentWord([]);
-  }
-
-  function handleSubmitWord() {
-    if (currentWord.length < 1) {
-      console.log("can't submit blank word");
-    } else {
-      if (wordList.includes(parseCurrentWord())) {
-        console.log("word already entered");
-        handleClearWord();
-      } else {
-        setWordList((prevState) => {
-          return [...prevState, ...[parseCurrentWord()]];
-        });
-        handleClearWord();
-      }
-    }
   }
 
   return (
     <div className="ButtonContainer">
       <button onClick={handleClearWord}>CLEAR</button>
       <div className="CurrentWordContainer">
-        <p>{parseCurrentWord()}</p>
+        <p>{readableCurrentWord}</p>
       </div>
       <button onClick={handleSubmitWord}>SUBMIT</button>
     </div>
