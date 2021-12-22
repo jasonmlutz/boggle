@@ -1,9 +1,16 @@
 import React from "react";
 
-export default function ButtonContainer({readableCurrentWord, setCurrentWord, handleSubmitWord}) {
-
+export default function ButtonContainer({
+  readableCurrentWord,
+  setCurrentWord,
+  setSelectedCubes,
+  setCurrentCube,
+  handleSubmitWord
+}) {
   function handleClearWord() {
     setCurrentWord([]);
+    setSelectedCubes([]);
+    setCurrentCube({index: -1});
   }
 
   return (

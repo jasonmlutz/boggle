@@ -71,14 +71,15 @@ export default function Game() {
   return (
     <div className="Game Game-portrait">
       <CurrentCubeContext.Provider value={{ currentCube, setCurrentCube }}>
-        <SelectedCubesContext.Provider value = {{selectedCubes}}>
-          <Board
-          />
+        <SelectedCubesContext.Provider value={{ selectedCubes }}>
+          <Board />
         </SelectedCubesContext.Provider>
         <div className="Interface Interface-portrait">
           <ButtonContainer
             readableCurrentWord={parseCurrentWord(currentWord)}
             setCurrentWord={setCurrentWord}
+            setSelectedCubes={setSelectedCubes}
+            setCurrentCube={setCurrentCube}
             handleSubmitWord={handleSubmitWord}
           />
           <WordList wordList={wordList} />
