@@ -41,7 +41,6 @@ export default function Board() {
       var newCube = (
         <li className="Cube-container" key={index}>
           <Cube
-            letters={letters}
             letter={letter}
             row={row}
             col={col}
