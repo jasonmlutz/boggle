@@ -51,6 +51,12 @@ export default function Game() {
     }
   }, [currentCube]);
 
+  function handleClearWord() {
+    setCurrentWord([]);
+    setSelectedCubes([]);
+    setCurrentCube({ index: -1 });
+  }
+
   function handleSubmitWord() {
     console.log("word submitted");
     if (currentWord.length < 1) {
@@ -77,9 +83,7 @@ export default function Game() {
         <div className="Interface Interface-portrait">
           <ButtonContainer
             readableCurrentWord={parseCurrentWord(currentWord)}
-            setCurrentWord={setCurrentWord}
-            setSelectedCubes={setSelectedCubes}
-            setCurrentCube={setCurrentCube}
+            handleClearWord={handleClearWord}
             handleSubmitWord={handleSubmitWord}
           />
           <WordList wordList={wordList} />
