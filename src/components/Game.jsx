@@ -25,7 +25,6 @@ export default function Game() {
 
   useEffect(() => {
     if (currentCube.letter) {
-      console.log("current cube", currentCube.letter);
       // if this is the first cube clicked, we may add freely without any checks
       if (currentWord.length === 0) {
         setCurrentWord([currentCube]);
@@ -46,8 +45,6 @@ export default function Game() {
           }
         }
       }
-    } else {
-      console.log("no current cube");
     }
   }, [currentCube]);
 
