@@ -27,29 +27,31 @@ export default function Game() {
 
   useEffect(() => {
     if (currentCube.letter) {
-      // if this is the first cube clicked, we may add freely without any checks
-      if (currentWord.length === 0) {
-        setCurrentWord([currentCube]);
+      // build an array of the indexes of letters in current word
+      var usedCubesIndexes = currentWord.map((letterData) => letterData.index);
+      // check whether the clicked cube is among those already clicked
+      // this will pass as true if currentWord.length === 0
+      if (usedCubesIndexes.includes(currentCube.index)) {
+        console.log("cube already used");
       } else {
-        // check whether the clicked cube is among those already clicked
-        const usedCubesIndexes = currentWord.map(
-          (letterData) => letterData.index
-        );
-        if (usedCubesIndexes.includes(currentCube.index)) {
-          console.log("cube already used");
+        // check whether the cube is adjacent to the last cube in the current word
+        // this will be undef if currentWord.length === 0,
+        // hence the OR in the conditional
+        const lastValidLetter = currentWord[currentWord.length - 1];
+        if (
+          currentWord.length === 0 ||
+          calculateDistance(currentCube, lastValidLetter) < 2
+        ) {
+          setCurrentWord([...currentWord, currentCube]);
+          usedCubesIndexes.push(currentCube.index);
+          setSelectedCubes(usedCubesIndexes);
         } else {
-          // check whether the cube is adjacent to the last cube in the current word
-          const lastValidLetter = currentWord[currentWord.length - 1];
-          if (calculateDistance(currentCube, lastValidLetter) < 2) {
-            setCurrentWord([...currentWord, currentCube]);
-            setSelectedCubes(usedCubesIndexes);
-          } else {
-            console.log("cube must be adjacent to previously selected cube");
-          }
+          console.log("cube must be adjacent to previously selected cube");
         }
       }
     }
-  }, [currentCube]);
+    setCurrentCube({ index: -1 });
+  }, [currentCube.index]);
 
   function handleClearWord() {
     setCurrentWord([]);

@@ -3,13 +3,8 @@ import React, { useContext } from "react";
 import { CurrentCubeContext } from "./Game";
 import { SelectedCubesContext } from "./Game";
 
-export default function Cube({
-  letter,
-  row,
-  col,
-  index,
-}) {
-  const { currentCube, setCurrentCube } = useContext(CurrentCubeContext);
+export default function Cube({ letter, row, col, index }) {
+  const { setCurrentCube } = useContext(CurrentCubeContext);
   const { selectedCubes } = useContext(SelectedCubesContext);
 
   function handleLetterClick() {
@@ -20,19 +15,16 @@ export default function Cube({
       index: index,
     };
 
-    if (currentCube.index === index) {
-      setCurrentCube({ index: -1 });
-    } else {
-      setCurrentCube(newCurrentCube);
-    }
+    setCurrentCube(newCurrentCube);
   }
 
   let className = "Cube";
-  if (selectedCubes.includes(index)) {
-    className += " CubeSelected"
-  }
-  if (currentCube.index === index) {
-    className += " CubeCurrent"
+  if (selectedCubes[selectedCubes.length - 1] === index) {
+    className += " CubeCurrent";
+  } else {
+    if (selectedCubes.includes(index)) {
+      className += " CubeSelected";
+    }
   }
 
   return (
