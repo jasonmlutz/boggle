@@ -167,6 +167,10 @@ input[type="submit"] {
   transform: translate(-50%, -50%);
 }
 
+.CurrentWordContainer p.empty {
+  background-color: inherit;
+}
+
 .WordList {
   display: flex;
   flex-direction: row;

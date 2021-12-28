@@ -6,11 +6,16 @@ export default function ButtonContainer({
   handleSubmitWord
 }) {
 
+  var classname = ""
+  if (readableCurrentWord.length === 0) {
+    classname += "empty"
+  }
+
   return (
     <div className="ButtonContainer">
       <button onClick={handleClearWord}>CLEAR</button>
       <div className="CurrentWordContainer">
-        <p>{readableCurrentWord}</p>
+        <p className = {classname}>{readableCurrentWord}</p>
       </div>
       <button onClick={handleSubmitWord}>SUBMIT</button>
     </div>
