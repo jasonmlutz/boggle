@@ -4,13 +4,12 @@ import ButtonContainer from "./ButtonContainer";
 import WordList from "./WordList";
 
 export const CurrentCubeContext = createContext();
-export const SelectedCubesContext = createContext();
+export const CurrentWordContext = createContext();
 
 export default function Game() {
   const [currentCube, setCurrentCube] = useState({ index: -1 });
   const [currentWord, setCurrentWord] = useState([]);
   const [wordList, setWordList] = useState([]);
-  const [selectedCubes, setSelectedCubes] = useState([]);
 
   function calculateDistance(cube1, cube2) {
     const colDiff = Math.abs(cube1.col - cube2.col);
@@ -26,27 +25,33 @@ export default function Game() {
   }
 
   useEffect(() => {
+    // if currentCube has more than just {index: -1}
     if (currentCube.letter) {
-      // build an array of the indexes of letters in current word
-      var usedCubesIndexes = currentWord.map((letterData) => letterData.index);
-      // check whether the clicked cube is among those already clicked
-      // this will pass as true if currentWord.length === 0
-      if (usedCubesIndexes.includes(currentCube.index)) {
-        console.log("cube already used");
+      // if there is not a curentWord, we may add freely
+      if (currentWord.length === 0) {
+        setCurrentWord([currentCube]);
       } else {
-        // check whether the cube is adjacent to the last cube in the current word
-        // this will be undef if currentWord.length === 0,
-        // hence the OR in the conditional
-        const lastValidLetter = currentWord[currentWord.length - 1];
-        if (
-          currentWord.length === 0 ||
-          calculateDistance(currentCube, lastValidLetter) < 2
-        ) {
-          setCurrentWord([...currentWord, currentCube]);
-          usedCubesIndexes.push(currentCube.index);
-          setSelectedCubes(usedCubesIndexes);
+        // check to see whether the currentCube corresponds to the
+        // last letter in the currentWord
+        if (currentWord.at(-1).index === currentCube.index) {
+          currentWord.pop();
         } else {
-          console.log("cube must be adjacent to previously selected cube");
+          // build an array of the indexes of letters in current word
+          var usedCubesIndexes = currentWord.map(
+            (letterData) => letterData.index
+          );
+          // check whether the clicked cube is among those already clicked
+          if (usedCubesIndexes.includes(currentCube.index)) {
+            console.log("cube already used");
+          } else {
+            // check whether the cube is adjacent to the last cube in the current word
+            const lastValidLetter = currentWord[currentWord.length - 1];
+            if (calculateDistance(currentCube, lastValidLetter) < 2) {
+              setCurrentWord([...currentWord, currentCube]);
+            } else {
+              console.log("cube must be adjacent to previously selected cube");
+            }
+          }
         }
       }
     }
@@ -55,7 +60,6 @@ export default function Game() {
 
   function handleClearWord() {
     setCurrentWord([]);
-    setSelectedCubes([]);
     setCurrentCube({ index: -1 });
   }
 
@@ -78,10 +82,10 @@ export default function Game() {
 
   return (
     <div className="Game Game-portrait">
-      <CurrentCubeContext.Provider value={{ currentCube, setCurrentCube }}>
-        <SelectedCubesContext.Provider value={{ selectedCubes }}>
+      <CurrentCubeContext.Provider value={{ setCurrentCube }}>
+        <CurrentWordContext.Provider value={{ currentWord }}>
           <Board />
-        </SelectedCubesContext.Provider>
+        </CurrentWordContext.Provider>
         <div className="Interface Interface-portrait">
           <ButtonContainer
             readableCurrentWord={parseCurrentWord(currentWord)}

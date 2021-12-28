@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 
 import { CurrentCubeContext } from "./Game";
-import { SelectedCubesContext } from "./Game";
+import { CurrentWordContext } from "./Game";
 
 export default function Cube({ letter, row, col, index }) {
   const { setCurrentCube } = useContext(CurrentCubeContext);
-  const { selectedCubes } = useContext(SelectedCubesContext);
+  const { currentWord } = useContext(CurrentWordContext);
 
   function handleLetterClick() {
     const newCurrentCube = {
@@ -18,8 +18,12 @@ export default function Cube({ letter, row, col, index }) {
     setCurrentCube(newCurrentCube);
   }
 
+  const selectedCubes = currentWord.map(
+    letterData => letterData.index
+  )
+
   let className = "Cube";
-  if (selectedCubes[selectedCubes.length - 1] === index) {
+  if (selectedCubes.at(-1) === index) {
     className += " CubeCurrent";
   } else {
     if (selectedCubes.includes(index)) {
