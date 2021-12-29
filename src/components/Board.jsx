@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import Cube from "./Cube";
+import Solution from "./Solution";
 import { cubeLetters } from "./resources/cubeLetters";
 
 export default function Board() {
@@ -58,15 +59,25 @@ export default function Board() {
     orderedCubesArray.forEach((cube) => {
       var newCube = (
         <li className="Cube-container" key={cube.index}>
-          <Cube letter={cube.letter} row={cube.row} col={cube.col} index={cube.index} />
+          <Cube
+            letter={cube.letter}
+            row={cube.row}
+            col={cube.col}
+            index={cube.index}
+          />
         </li>
       );
       // add the new cube to the orderedCubes array
       orderedCubes.push(newCube);
     });
 
-    return orderedCubes
+    return orderedCubes;
   });
 
-  return <ul className="Board">{orderedCubesListItems}</ul>;
+  return (
+    <div>
+      <ul className="Board">{orderedCubesListItems}</ul>
+      <Solution cubes={orderedCubesArray} />
+    </div>
+  );
 }
