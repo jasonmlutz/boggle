@@ -27,7 +27,7 @@ export default function Board() {
 
   // build a ul of Cube components from the cubeLetters
   // to be run only on the first render
-  const [orderedCubesListItems] = useState(() => {
+  const [orderedCubesArray] = useState(() => {
     var orderedCubes = [];
     var row = 1;
     var col = 1;
@@ -38,16 +38,7 @@ export default function Board() {
         splitLetters[Math.floor(Math.random() * splitLetters.length)];
 
       // create a new cube using the current letters and coords
-      var newCube = (
-        <li className="Cube-container" key={index}>
-          <Cube
-            letter={letter}
-            row={row}
-            col={col}
-            index={index}
-          />
-        </li>
-      );
+      var newCube = { letter: letter, row: row, col: col, index: index };
       // add the new cube to the orderedCubes array
       orderedCubes.push(newCube);
       // increment the column
@@ -60,6 +51,21 @@ export default function Board() {
     });
 
     return orderedCubes;
+  });
+
+  const [orderedCubesListItems] = useState(() => {
+    var orderedCubes = [];
+    orderedCubesArray.forEach((cube) => {
+      var newCube = (
+        <li className="Cube-container" key={cube.index}>
+          <Cube letter={cube.letter} row={cube.row} col={cube.col} index={cube.index} />
+        </li>
+      );
+      // add the new cube to the orderedCubes array
+      orderedCubes.push(newCube);
+    });
+
+    return orderedCubes
   });
 
   return <ul className="Board">{orderedCubesListItems}</ul>;
