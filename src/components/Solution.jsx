@@ -34,16 +34,25 @@ export default function Solution({ cubes }) {
       smallerWords[length] = [];
       smallerWords[length - 1].forEach((element) => {
         // identify the last letter
-        var lastLetter = element.data.at(-1);
+        var lastLetterData = element.data.at(-1);
         // loop over all the cubes
         cubes.forEach((cube) => {
-          // check whether that cube is adjacent to the last letter
-          var dist = calculateDistance(lastLetter, cube);
-          if (dist !== 0 && dist < 2) {
-            // the cube isn't the lastLetter and is adjacent to the last letter
-            // so check so that cubes are not re-used, when length > 2
-            var newWord = element.word + cube.letter;
-            var newData = element.data.concat(cube);
+          // calculate the distance between the cube and the lastLetter
+          const distToLastLetter = calculateDistance(lastLetterData, cube);
+          // calculate the distance between the cube and each other letter
+          // first identify the data for the non-terminal letters
+          const nonTerminalLetterData = element.data.slice(0, -1);
+          // build an array of distances cube <-> letter
+          const distancesToOtherLetters = nonTerminalLetterData.map(letterData => (
+            calculateDistance(letterData, cube)
+          ))
+          // take the minimum of that array; it will be positive unless
+          // the cube is a non-terminal letter
+          const minDistToOtherLetters = Math.min(...distancesToOtherLetters)
+          if (distToLastLetter === 1 && minDistToOtherLetters > 0) {
+            // the cube isn't the lastLetterData and is adjacent to the lastLetterData
+            const newWord = element.word + cube.letter;
+            const newData = element.data.concat(cube);
             smallerWords[length].push({ word: newWord, data: newData });
           }
         });
