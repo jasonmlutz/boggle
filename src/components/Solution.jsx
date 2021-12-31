@@ -13,26 +13,39 @@ export default function Solution({ cubes }) {
   }
 
   function buildBoggleWords(length) {
+    // NOTES: 
+    // there are no 1-letter words in the dictionary
+    // 
+    // for each letter in the alphabet, there is a valid word
+    // which begins with that letter
+    // 
     // base case
     if (length === 1) {
-      const lengthOneWords = cubes.map((cube) => {
+      const baseWords = cubes.map((cube) => {
         var letter = cube.letter;
         return { word: letter, data: [cube] };
       });
-      // so a typical entry of lengthOneWords looks like
+      // so a typical entry of baseWords looks like
       // { word: "C", data: [{col: 1, index: 0, letter: "C", row: 1}] }a
       // return an object with key 1 and value the array of length 1 words
-      return { 1: lengthOneWords };
+      return { baseWords: baseWords,
+        1: [] };
     } else {
       // build words of size at most length - 1
       // an object with format
-      // var test = {1: lengthOneWords,
-      // 2: lengthTwoWords};
+      // var test = {
+      // baseWords: []
+      // 1: lengthOneWords,
+      // 2: lengthTwoWords}
+      // ;
       var smallerWords = buildBoggleWords(length - 1);
-      // loop over the longest words in that object,
-      // we'll add letters to them to get size length
+      // loop over the baseWords in that object
+      // we'll add letters to them
+      // if that addition produces a valid word, add it to smallerWords.length
       smallerWords[length] = [];
-      smallerWords[length - 1].forEach((element) => {
+      // if it produces a valid baseWord, add it to a newBaseWords list
+      var newBaseWords = [];
+      smallerWords.baseWords.forEach((element) => {
         // identify the last letter
         var lastLetterData = element.data.at(-1);
         // loop over all the cubes
@@ -51,18 +64,47 @@ export default function Solution({ cubes }) {
           const minDistToOtherLetters = Math.min(...distancesToOtherLetters)
           if (distToLastLetter === 1 && minDistToOtherLetters > 0) {
             // the cube isn't the lastLetterData and is adjacent to the lastLetterData
+            // moreover it isn't an already used cube, so it is a valid Boggle word
             const newWord = element.word + cube.letter;
+            const newLength = newWord.length;
             const newData = element.data.concat(cube);
-            smallerWords[length].push({ word: newWord, data: newData });
+            // if it is a valid dictionary word, add it
+            var definition = dictionary[newWord.toLowerCase()];
+            if (definition !== undefined) {
+              smallerWords[length].push({ word: newWord, data: newData });
+            }
+            newBaseWords.push({ word: newWord, data: newData });
+            // now we check whether there is at least one word that starts with that base word:
+            // for (const [word, definition] of Object.entries(dictionary)) {
+            //   if (newWord.toLowerCase() === word.slice(0, newLength)) {
+            //     newBaseWords.push({ word: newWord, data: newData });
+            //     break;
+            //   }
+            // }
           }
         });
       });
     }
+    smallerWords.baseWords = newBaseWords;
     return smallerWords;
   }
 
   function test() {
-    console.log(buildBoggleWords(3));
+    const length = 11;
+    console.log(`starting buildBoggleWords, length ${length}`)
+    const t0 = performance.now();
+    console.log(buildBoggleWords(length));
+    const t1 = performance.now();
+    console.log(`buildBoggleWords took ${t1 - t0} milliseconds.`);
+
+    // var startingLetters = []
+    // for (const [key, value] of Object.entries(dictionary)) {
+    //   var firstLetter = key.at(0)
+    //   if (!startingLetters.includes(firstLetter)) {
+    //     startingLetters.push(firstLetter)
+    //   }
+    // }
+    // console.log(startingLetters.length, startingLetters)
   }
 
   return <button onClick={test}>CLICK ME</button>;
