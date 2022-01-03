@@ -2,7 +2,7 @@ import React from "react";
 import { dictionary } from "./resources/OWL2";
 
 export default function WordList({ wordList }) {
-  const wordListItems = wordList.map((word, index) => {
+  const wordListItems = Object.keys(wordList).map((word, index) => {
     var classname = "Word";
     var definition = dictionary[word.toLowerCase()];
     if (definition === undefined) {
