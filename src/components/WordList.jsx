@@ -4,7 +4,7 @@ import { dictionary } from "./resources/OWL2";
 import { WordHoverContext } from "./contexts/wordHoverContext";
 
 export default function WordList({ wordList }) {
-  const { wordHover, setWordHover } = useContext(WordHoverContext);
+  const { setWordHover } = useContext(WordHoverContext);
 
   const wordListItems = Object.keys(wordList).map((word, index) => {
     var classname = "Word";
@@ -23,9 +23,11 @@ export default function WordList({ wordList }) {
     }
     function mouseEnterShowCubes() {
       console.log(wordList[word]);
+      setWordHover(wordList[word]);
     }
     function mouseLeaveResetCubes() {
-      console.log("cubes reset!")
+      console.log("cubes reset!");
+      setWordHover([]);
     }
     return (
       <li
