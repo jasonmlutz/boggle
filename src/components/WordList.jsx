@@ -1,10 +1,10 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { dictionary } from "./resources/OWL2";
 
 import { WordHoverContext } from "./contexts/wordHoverContext";
 
 export default function WordList({ wordList }) {
-  const {wordHover, setWordHover} = useContext(WordHoverContext);
+  const { wordHover, setWordHover } = useContext(WordHoverContext);
 
   const wordListItems = Object.keys(wordList).map((word, index) => {
     var classname = "Word";
@@ -16,13 +16,25 @@ export default function WordList({ wordList }) {
     }
     function displayDefinition() {
       if (definition === undefined) {
-        console.log("no such word")
+        console.log("no such word");
       } else {
-        console.log(definition)
+        console.log(definition);
       }
     }
+    function mouseEnterShowCubes() {
+      console.log(wordList[word]);
+    }
+    function mouseLeaveResetCubes() {
+      console.log("cubes reset!")
+    }
     return (
-      <li key={index} className={classname} onClick = {displayDefinition}>
+      <li
+        key={index}
+        className={classname}
+        onClick={displayDefinition}
+        onMouseEnter={mouseEnterShowCubes}
+        onMouseLeave={mouseLeaveResetCubes}
+      >
         {word}
       </li>
     );
