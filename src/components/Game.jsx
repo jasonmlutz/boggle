@@ -3,6 +3,8 @@ import Board from "./Board";
 import ButtonContainer from "./ButtonContainer";
 import WordList from "./WordList";
 
+import { WordHoverProvider } from "./contexts/wordHoverContext";
+
 export const CurrentCubeContext = createContext();
 export const CurrentWordContext = createContext();
 
@@ -87,17 +89,19 @@ export default function Game() {
   return (
     <div className="Game Game-portrait">
       <CurrentCubeContext.Provider value={{ setCurrentCube }}>
-        <CurrentWordContext.Provider value={{ currentWord }}>
-          <Board />
-        </CurrentWordContext.Provider>
-        <div className="Interface Interface-portrait">
-          <ButtonContainer
-            readableCurrentWord={readableCurrentWord(currentWord)}
-            handleClearWord={handleClearWord}
-            handleSubmitWord={handleSubmitWord}
-          />
-          <WordList wordList={wordList} />
-        </div>
+        <WordHoverProvider>
+          <CurrentWordContext.Provider value={{ currentWord }}>
+            <Board />
+          </CurrentWordContext.Provider>
+          <div className="Interface Interface-portrait">
+            <ButtonContainer
+              readableCurrentWord={readableCurrentWord(currentWord)}
+              handleClearWord={handleClearWord}
+              handleSubmitWord={handleSubmitWord}
+            />
+            <WordList wordList={wordList} />
+          </div>
+        </WordHoverProvider>
       </CurrentCubeContext.Provider>
     </div>
   );

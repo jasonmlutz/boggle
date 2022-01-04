@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Cube from "./Cube";
 import Solution from "./Solution";
 import { cubeLetters } from "./resources/cubeLetters";
+
+import { WordHoverContext } from "./contexts/wordHoverContext";
 
 export default function Board() {
   // try using https://reactjs.org/docs/hooks-reference.html#lazy-initial-state instead

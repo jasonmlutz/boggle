@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import { dictionary } from "./resources/OWL2";
 
+import { WordHoverContext } from "./contexts/wordHoverContext";
+
 export default function WordList({ wordList }) {
+  const {wordHover, setWordHover} = useContext(WordHoverContext);
+
   const wordListItems = Object.keys(wordList).map((word, index) => {
     var classname = "Word";
     var definition = dictionary[word.toLowerCase()];
