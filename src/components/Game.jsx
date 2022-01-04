@@ -3,13 +3,15 @@ import Board from "./Board";
 import ButtonContainer from "./ButtonContainer";
 import WordList from "./WordList";
 
+import { WordHoverProvider } from "./contexts/wordHoverContext";
+
 export const CurrentCubeContext = createContext();
 export const CurrentWordContext = createContext();
 
 export default function Game() {
   const [currentCube, setCurrentCube] = useState({ index: -1 });
   const [currentWord, setCurrentWord] = useState([]);
-  const [wordList, setWordList] = useState([]);
+  const [wordList, setWordList] = useState({});
 
   function calculateDistance(cube1, cube2) {
     const colDiff = Math.abs(cube1.col - cube2.col);
@@ -17,11 +19,14 @@ export default function Game() {
     return Math.max(colDiff, rowDiff);
   }
 
-  function parseCurrentWord() {
-    const currentWordReadable = currentWord.map(
-      (letterData) => letterData.letter
-    );
-    return currentWordReadable.join("");
+  function readableCurrentWord() {
+    const readable = currentWord.map((letterData) => letterData.letter);
+    return readable.join("");
+  }
+
+  function cubeIndexesCurrentWord() {
+    const indexes = currentWord.map((letterData) => letterData.index);
+    return indexes;
   }
 
   useEffect(() => {
@@ -68,12 +73,13 @@ export default function Game() {
     if (currentWord.length < 1) {
       console.log("can't submit blank word");
     } else {
-      if (wordList.includes(parseCurrentWord())) {
+      if (Object.keys(wordList).includes(readableCurrentWord())) {
         console.log("word already entered");
         handleClearWord();
       } else {
         setWordList((prevState) => {
-          return [...prevState, ...[parseCurrentWord()]];
+          const newWord = {[readableCurrentWord()]: cubeIndexesCurrentWord()}
+          return {...prevState, ...newWord};
         });
         handleClearWord();
       }
@@ -83,17 +89,19 @@ export default function Game() {
   return (
     <div className="Game Game-portrait">
       <CurrentCubeContext.Provider value={{ setCurrentCube }}>
-        <CurrentWordContext.Provider value={{ currentWord }}>
-          <Board />
-        </CurrentWordContext.Provider>
-        <div className="Interface Interface-portrait">
-          <ButtonContainer
-            readableCurrentWord={parseCurrentWord(currentWord)}
-            handleClearWord={handleClearWord}
-            handleSubmitWord={handleSubmitWord}
-          />
-          <WordList wordList={wordList} />
-        </div>
+        <WordHoverProvider>
+          <CurrentWordContext.Provider value={{ currentWord }}>
+            <Board />
+          </CurrentWordContext.Provider>
+          <div className="Interface Interface-portrait">
+            <ButtonContainer
+              readableCurrentWord={readableCurrentWord(currentWord)}
+              handleClearWord={handleClearWord}
+              handleSubmitWord={handleSubmitWord}
+            />
+            <WordList wordList={wordList} />
+          </div>
+        </WordHoverProvider>
       </CurrentCubeContext.Provider>
     </div>
   );

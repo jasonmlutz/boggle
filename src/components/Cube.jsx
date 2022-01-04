@@ -3,7 +3,11 @@ import React, { useContext } from "react";
 import { CurrentCubeContext } from "./Game";
 import { CurrentWordContext } from "./Game";
 
+import { WordHoverContext } from "./contexts/wordHoverContext";
+
 export default function Cube({ letter, row, col, index }) {
+  const { wordHover } = useContext(WordHoverContext);
+
   const { setCurrentCube } = useContext(CurrentCubeContext);
   const { currentWord } = useContext(CurrentWordContext);
 
@@ -18,9 +22,7 @@ export default function Cube({ letter, row, col, index }) {
     setCurrentCube(newCurrentCube);
   }
 
-  const selectedCubes = currentWord.map(
-    letterData => letterData.index
-  )
+  const selectedCubes = currentWord.map((letterData) => letterData.index);
 
   let className = "Cube";
   if (selectedCubes.at(-1) === index) {
@@ -29,6 +31,10 @@ export default function Cube({ letter, row, col, index }) {
     if (selectedCubes.includes(index)) {
       className += " CubeSelected";
     }
+  }
+
+  if (wordHover.includes(index)) {
+    className += " WordListDisplayCube";
   }
 
   return (

@@ -126,6 +126,11 @@ input[type="submit"] {
   background-color: darkblue;
 }
 
+.WordListDisplayCube {
+  background-color: pink;
+  color: black;
+}
+
 .Cube p {
   margin: 0;
   position: absolute;
