@@ -87,7 +87,7 @@ export default function Game() {
   }
 
   return (
-    <div className="Game Game-portrait">
+    <div className="Game">
       <CurrentCubeContext.Provider value={{ setCurrentCube }}>
         <WordHoverProvider>
           <CurrentWordContext.Provider value={{ currentWord }}>
