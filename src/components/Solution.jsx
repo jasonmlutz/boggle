@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { dictionary } from "./resources/OWL2";
 
 export default function Solution({ cubes }) {
   // cubes is an array with entries of the form
   // {col: 1, index: 0, letter: "C", row: 1}
+  const [sortedDictionary] = useState(() => {
+    var sorted = {};
+    for (let i = 2; i <= 12; i++) {
+      sorted[i] = {};
+    }
+
+    for (const [word, definition] of Object.entries(dictionary)) {
+      var length = word.length;
+      sorted[length][word] = definition;
+    }
+
+    return sorted;
+  });
 
   function calculateDistance(cube1, cube2) {
     const colDiff = Math.abs(cube1.col - cube2.col);
@@ -13,12 +26,13 @@ export default function Solution({ cubes }) {
   }
 
   function buildBoggleWords(length) {
-    // NOTES: 
+    // NOTES:
     // there are no 1-letter words in the dictionary
-    // 
+    // moreover, there are no words of length greater than 12
+    //
     // for each letter in the alphabet, there is a valid word
     // which begins with that letter
-    // 
+    //
     // base case
     if (length === 1) {
       const baseWords = cubes.map((cube) => {
@@ -26,10 +40,9 @@ export default function Solution({ cubes }) {
         return { word: letter, data: [cube] };
       });
       // so a typical entry of baseWords looks like
-      // { word: "C", data: [{col: 1, index: 0, letter: "C", row: 1}] }a
+      // { word: "C", data: [{col: 1, index: 0, letter: "C", row: 1}] }
       // return an object with key 1 and value the array of length 1 words
-      return { baseWords: baseWords,
-        1: [] };
+      return { baseWords: baseWords, 1: [] };
     } else {
       // build words of size at most length - 1
       // an object with format
@@ -56,12 +69,12 @@ export default function Solution({ cubes }) {
           // first identify the data for the non-terminal letters
           const nonTerminalLetterData = element.data.slice(0, -1);
           // build an array of distances cube <-> letter
-          const distancesToOtherLetters = nonTerminalLetterData.map(letterData => (
-            calculateDistance(letterData, cube)
-          ))
+          const distancesToOtherLetters = nonTerminalLetterData.map(
+            (letterData) => calculateDistance(letterData, cube)
+          );
           // take the minimum of that array; it will be positive unless
           // the cube is a non-terminal letter
-          const minDistToOtherLetters = Math.min(...distancesToOtherLetters)
+          const minDistToOtherLetters = Math.min(...distancesToOtherLetters);
           if (distToLastLetter === 1 && minDistToOtherLetters > 0) {
             // the cube isn't the lastLetterData and is adjacent to the lastLetterData
             // moreover it isn't an already used cube, so it is a valid Boggle word
@@ -73,14 +86,18 @@ export default function Solution({ cubes }) {
             if (definition !== undefined) {
               smallerWords[length].push({ word: newWord, data: newData });
             }
-            newBaseWords.push({ word: newWord, data: newData });
             // now we check whether there is at least one word that starts with that base word:
-            // for (const [word, definition] of Object.entries(dictionary)) {
-            //   if (newWord.toLowerCase() === word.slice(0, newLength)) {
-            //     newBaseWords.push({ word: newWord, data: newData });
-            //     break;
-            //   }
-            // }
+            // loop over lengths of words starting with newLength + 1
+            for (let i = newLength + 1; i <= 12; i++) {
+              Object.keys(sortedDictionary[i]).every((word) => {
+                if (newWord.toLowerCase() === word.slice(0, newLength)) {
+                  newBaseWords.push({ word: newWord, data: newData });
+                  i = 13;
+                  return false;
+                }
+                return true;
+              });
+            }
           }
         });
       });
@@ -90,8 +107,11 @@ export default function Solution({ cubes }) {
   }
 
   function test() {
-    const length = 11;
-    console.log(`starting buildBoggleWords, length ${length}`)
+    // console.log(boggleWords)
+    // console.log(sortedDictionary);
+
+    const length = 12;
+    console.log(`starting buildBoggleWords, length ${length}`);
     const t0 = performance.now();
     console.log(buildBoggleWords(length));
     const t1 = performance.now();
@@ -107,5 +127,5 @@ export default function Solution({ cubes }) {
     // console.log(startingLetters.length, startingLetters)
   }
 
-  return <button onClick={test}>CLICK ME</button>;
+  return <button onClick={test}>GENERATE SOLUTION</button>;
 }
