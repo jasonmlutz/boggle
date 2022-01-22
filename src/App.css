@@ -38,6 +38,7 @@ small {
   vertical-align: inherit;
   box-sizing: inherit;
   background: transparent;
+  overflow-y: hidden;
 }
 
 ol,
@@ -199,6 +200,7 @@ input[type="submit"] {
   flex-wrap: wrap;
   align-content: space-around;
   background-color: blue;
+  overflow-y: auto;
 }
 
 .Word {

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+import { WordListContext } from "./Game";
 
 import { dictionary } from "./resources/OWL2";
 
 export default function Solution({ cubes }) {
+  const { setWordList } = useContext(WordListContext);
   // cubes is an array with entries of the form
   // {col: 1, index: 0, letter: "C", row: 1}
   const [sortedDictionary] = useState(() => {
@@ -113,7 +116,18 @@ export default function Solution({ cubes }) {
     const length = 12;
     console.log(`starting buildBoggleWords, length ${length}`);
     const t0 = performance.now();
-    console.log(buildBoggleWords(length));
+    var allWords = buildBoggleWords(length)
+    const arrays = Object.values(allWords)
+    var merged = [].concat.apply([], arrays);
+    console.log(merged);
+    // add found words to WordList
+    merged.forEach(item => {
+      const indexes = item.data.map(datum => datum.index)
+      setWordList((prevState) => {
+        const newWord = { [item.word]: indexes };
+        return { ...prevState, ...newWord };
+      });
+    })
     const t1 = performance.now();
     console.log(`buildBoggleWords took ${t1 - t0} milliseconds.`);
 

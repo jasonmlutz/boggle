@@ -7,6 +7,7 @@ import { WordHoverProvider } from "./contexts/wordHoverContext";
 
 export const CurrentCubeContext = createContext();
 export const CurrentWordContext = createContext();
+export const WordListContext = createContext();
 
 export default function Game() {
   const [currentCube, setCurrentCube] = useState({ index: -1 });
@@ -78,8 +79,8 @@ export default function Game() {
         handleClearWord();
       } else {
         setWordList((prevState) => {
-          const newWord = {[readableCurrentWord()]: cubeIndexesCurrentWord()}
-          return {...prevState, ...newWord};
+          const newWord = { [readableCurrentWord()]: cubeIndexesCurrentWord() };
+          return { ...prevState, ...newWord };
         });
         handleClearWord();
       }
@@ -91,7 +92,9 @@ export default function Game() {
       <CurrentCubeContext.Provider value={{ setCurrentCube }}>
         <WordHoverProvider>
           <CurrentWordContext.Provider value={{ currentWord }}>
-            <Board />
+            <WordListContext.Provider value={{ setWordList }}>
+              <Board />
+            </WordListContext.Provider>
           </CurrentWordContext.Provider>
           <div className="Interface Interface-portrait">
             <ButtonContainer
@@ -99,6 +102,7 @@ export default function Game() {
               handleClearWord={handleClearWord}
               handleSubmitWord={handleSubmitWord}
             />
+
             <WordList wordList={wordList} />
           </div>
         </WordHoverProvider>

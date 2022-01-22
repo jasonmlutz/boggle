@@ -75,7 +75,7 @@ export default function Board() {
   });
 
   return (
-    <div>
+    <div className = "BoardContainer">
       <ul className="Board">{orderedCubesListItems}</ul>
       <Solution cubes={orderedCubesArray} />
     </div>
