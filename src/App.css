@@ -101,34 +101,6 @@ input[type="submit"] {
   background-color: red;
 }
 
-@media screen and (orientation: portrait) {
-  .Game {
-    height: 100vh;
-    width: min(400px, 100vw);
-    flex-direction: column;
-  }
-
-  .Board {
-    width: 100%;
-    height: min(400px, 100vmin);
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .Game {
-    height: min(400px, 100vh);
-    width: min(800px, 100vw);
-    flex-direction: row;
-    flex-wrap: nowrap;
-
-  }
-
-  .Board {
-    height: calc(100vh - 18px);
-    width: min(400px, 100vmin);
-  }
-}
-
 .Cube-container {
   height: 25%;
   width: 25%;
@@ -169,19 +141,6 @@ input[type="submit"] {
   background-color: yellow;
 }
 
-@media screen and (orientation: portrait) {
-  .Interface {
-    width: 100%;
-    flex: 1 1 auto;
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .Interface {
-    width: calc(100vw - min(400px, 100vmin));
-  }
-}
-
 .ButtonContainer {
   display: flex;
   flex-direction: row;
@@ -220,18 +179,6 @@ input[type="submit"] {
   overflow-y: auto;
 }
 
-@media screen and (orientation: portrait) {
-  .WordList {
-    height: calc(calc(100vh - min(400px, 100vmin)) - 58px);
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .WordList {
-    height: calc(100vh - 40px);
-  }
-}
-
 .Word {
   padding: 5px;
   margin: 5px;
@@ -247,4 +194,50 @@ input[type="submit"] {
 .validWord {
   background: green;
   color: white;
+}
+
+/* Media queries */
+
+@media screen and (orientation: portrait) {
+  .Game {
+    height: 100vh;
+    width: min(400px, 100vw);
+    flex-direction: column;
+  }
+
+  .Board {
+    width: 100%;
+    height: min(400px, 100vmin);
+  }
+  
+  .Interface {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .WordList {
+    height: calc(calc(100vh - min(400px, 100vmin)) - 58px);
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .Game {
+    height: min(400px, 100vh);
+    width: min(800px, 100vw);
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .Board {
+    height: calc(100vh - 18px);
+    width: min(400px, 100vmin);
+  }
+
+  .Interface {
+    width: calc(100vw - min(400px, 100vmin));
+  }
+
+  .WordList {
+    height: calc(100vh - 40px);
+  }
 }
