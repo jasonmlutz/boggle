@@ -96,7 +96,7 @@ export default function Game() {
               <Board />
             </WordListContext.Provider>
           </CurrentWordContext.Provider>
-          <div className="Interface Interface-portrait">
+          <div className="Interface">
             <ButtonContainer
               readableCurrentWord={readableCurrentWord(currentWord)}
               handleClearWord={handleClearWord}
