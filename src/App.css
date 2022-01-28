@@ -38,7 +38,8 @@ small {
   vertical-align: inherit;
   box-sizing: inherit;
   background: transparent;
-  overflow-y: hidden;
+  overflow-x: inherit;
+  overflow-y: inherit;
 }
 
 ol,
