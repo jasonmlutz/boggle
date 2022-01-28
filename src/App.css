@@ -42,6 +42,11 @@ small {
   overflow-y: inherit;
 }
 
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 ol,
 ul {
   list-style: none;
@@ -202,6 +207,12 @@ input[type="submit"] {
   align-content: space-around;
   background-color: blue;
   overflow-y: auto;
+}
+
+@media screen and (orientation: portrait) {
+  .WordList {
+    height: calc(calc(100vh - min(400px, 100vmin)) - 58px);
+  }
 }
 
 .Word {
